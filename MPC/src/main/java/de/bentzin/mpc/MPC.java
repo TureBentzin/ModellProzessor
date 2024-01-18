@@ -29,9 +29,10 @@ public class MPC {
                     InputStreamReader reader = new InputStreamReader(fileInputStream);
                     BufferedReader bufferedReader = new BufferedReader(reader);
                     Compiler compiler = new Compiler(bufferedReader);
+                    compiler.compile();
 
 
-                } catch (FileNotFoundException e) {
+                } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
 

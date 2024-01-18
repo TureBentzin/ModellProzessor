@@ -1,5 +1,7 @@
 package de.bentzin.mpc;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import org.jetbrains.annotations.NotNull;
 
 public class HexChar {
@@ -31,6 +33,28 @@ public class HexChar {
 
     public static final @NotNull HexChar xF = new HexChar('F');
 
+    public static final @NotNull BiMap<Character, HexChar> INDEX = HashBiMap.create(16);
+
+    static {
+        //populate INDEX
+        INDEX.put('0', x0);
+        INDEX.put('1', x1);
+        INDEX.put('2', x2);
+        INDEX.put('3', x3);
+        INDEX.put('4', x4);
+        INDEX.put('5', x5);
+        INDEX.put('6', x6);
+        INDEX.put('7', x7);
+        INDEX.put('8', x8);
+        INDEX.put('9', x9);
+        INDEX.put('A', xA);
+        INDEX.put('B', xB);
+        INDEX.put('C', xC);
+        INDEX.put('D', xD);
+        INDEX.put('E', xE);
+        INDEX.put('F', xF);
+    }
+
 
     private final char c;
     private final int intValue;
@@ -59,5 +83,10 @@ public class HexChar {
 
     public byte @NotNull [] toBytes() {
         return hexCharToByteArray(c);
+    }
+
+    @Override
+    public boolean equals(@NotNull Object obj) {
+        return this == obj;
     }
 }
