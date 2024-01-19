@@ -54,6 +54,8 @@ cache:
 # See https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 .verify:
   stage: test
+  tags:
+    - shared
   script:
     - 'mvn $MAVEN_CLI_OPTS verify -f MPC/pom.xml'
     - 'mvn $MAVEN_CLI_OPTS verify -f mempop/pom.xml'
