@@ -7,8 +7,7 @@ Compiler &amp; Simulator for the ModellProzessor from the "TI Module" at FH Aach
 ### MPC - ModellProzessor Compiler
 
 The MPC is a very simple and basic compiler for the ModellProzessor.
-It is written in Java and can be compiled from scratch using java
-21 [[download]](https://www.oracle.com/de/java/technologies/downloads/#java21)!
+It is written in Java and can be compiled from scratch using the `JDK Development Kit` [[download]](https://www.oracle.com/de/java/technologies/downloads/#java21)!
 To compile MPC use maven and run the install goal: [[install maven]](https://maven.apache.org/download.cgi)
 
 ```bash
