@@ -33,7 +33,7 @@ public class MPC {
                     BufferedReader bufferedReader = new BufferedReader(reader);
                     Compiler compiler = new Compiler(bufferedReader);
                     byte[] compile = compiler.compile(); //Compile the file
-                    try (FileOutputStream fileOutputStream = new FileOutputStream(name + ".bin")) {
+                    try (FileOutputStream fileOutputStream = new FileOutputStream(name + ".progm")) {
                         fileOutputStream.write(compile);
                     }
 
