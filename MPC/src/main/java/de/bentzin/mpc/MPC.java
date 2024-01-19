@@ -1,6 +1,5 @@
 package de.bentzin.mpc;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
@@ -16,7 +15,7 @@ public class MPC {
     public static void main(String[] args) {
         setupLogging();
         logger = Logger.getLogger(MPC.class.getName());
-        logger.log(Level.INFO, "Hello World");
+        logger.log(Level.INFO, "Welcome to the MPC Compiler!");
         if (args.length == 0) {
             logger.info("Please provide an .asm file to compile!");
         } else if (args.length == 1) {
