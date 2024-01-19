@@ -24,7 +24,7 @@ public class MemFileUtil {
         try (BufferedReader reader = new BufferedReader(new FileReader(mem))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] split = line.split(" ");
+                String[] split = line.split(": ");
                 if (split.length != 2) {
                     System.err.println("Failed to populate memory! .mem file is invalid!");
                     throw new IOException("Invalid line: " + line);

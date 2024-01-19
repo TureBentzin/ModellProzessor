@@ -17,6 +17,8 @@ public class MemPop {
 
 
     public static void main(@NotNull String @NotNull [] args) {
+        long time = System.currentTimeMillis();
+        System.out.println("Welcome to mempop!");
         File progm;
         Map<Integer, Integer> mmap = new HashMap<>();
         if (args.length == 2) {
@@ -46,8 +48,7 @@ public class MemPop {
                 System.err.println(e.toString());
                 System.exit(-1);
             }
-        }
-        if (args.length == 1) {
+        } else if (args.length == 1) {
             if (!args[0].endsWith(".progm")) {
                 System.err.println("Please provide a .progm file!");
                 System.exit(1);
@@ -70,6 +71,7 @@ public class MemPop {
             System.exit(-1);
             return;
         }
+
 
         byte[] memory = new byte[16];
         if (programm.length > 16) {
@@ -94,6 +96,8 @@ public class MemPop {
             System.err.println(e.toString());
             System.exit(-1);
         }
+        System.out.println("Finished writing to file: " + out.getPath());
+        System.out.println("mempop finished in " + (System.currentTimeMillis() - time) + "ms");
 
     }
 
