@@ -1,3 +1,4 @@
-NOP
 LDA #1
 STA (3)
+STA (4)
+BRN #1

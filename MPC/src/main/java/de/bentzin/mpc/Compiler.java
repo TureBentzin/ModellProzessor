@@ -1,7 +1,5 @@
 package de.bentzin.mpc;
 
-import org.checkerframework.checker.units.qual.A;
-import org.checkerframework.checker.units.qual.C;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
@@ -37,11 +35,13 @@ public class Compiler {
             }
         }
 
-        byte[] compiled = new byte[commandList.size() * 8];
+        byte[] compiled = new byte[commandList.size()];
         for (int i = 0; i < commandList.size(); i++) {
             Command command = commandList.get(i);
-            byte[] bytes = command.toByteArray();
-            System.arraycopy(bytes, 0, compiled, i * 8, bytes.length);
+            byte binary = command.toByte();
+                logger.info("Compiled Command no. " + i + ": " + binary);
+                compiled[i] = binary;
+            System.console();
         }
         String dump = HexDumpUtil.formatHexDump(compiled, 0, compiled.length);
         logger.info("Successfully compiled: \n " + dump + "\n");
@@ -75,6 +75,9 @@ public class Compiler {
                 } else if (operand == '(' && data.charAt(data.length() - 1) == ')' && data.length() == 3) {
                     operator.set(operator.get() + "_ADDRESS");
                     data_char = data.charAt(1);
+                } else if (data.length() == 1 && HexChar.INDEX.get(data.charAt(0)) != null) {
+                    data_char = data.charAt(0);
+                    //BR Case
                 } else {
                     throw CompilerException.unknownData(linec, data);
                 }

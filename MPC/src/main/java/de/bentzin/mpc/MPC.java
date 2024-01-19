@@ -24,12 +24,19 @@ public class MPC {
             File file = new File(args[0]);
             if (file.isFile() && file.exists()) {
                 logger.info("Reading file: " + args[0]);
+                String name = file.getName().substring(0, file.getName().lastIndexOf("."));
+                if (file.getName().endsWith(".asm")) {
+                    logger.warning("File does not end with .asm: " + args[0]);
+                }
                 try {
                     FileInputStream fileInputStream = new FileInputStream(file);
                     InputStreamReader reader = new InputStreamReader(fileInputStream);
                     BufferedReader bufferedReader = new BufferedReader(reader);
                     Compiler compiler = new Compiler(bufferedReader);
-                    compiler.compile();
+                    byte[] compile = compiler.compile(); //Compile the file
+                    try (FileOutputStream fileOutputStream = new FileOutputStream(name + ".bin")) {
+                        fileOutputStream.write(compile);
+                    }
 
 
                 } catch (IOException e) {

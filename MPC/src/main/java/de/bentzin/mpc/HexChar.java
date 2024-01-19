@@ -68,9 +68,9 @@ public class HexChar {
         return Character.digit(hexChar, 16);
     }
 
-    protected static byte @NotNull [] hexCharToByteArray(char hexChar) {
+    protected static byte hexCharToByteArray(char hexChar) {
         int intValue = hexCharToInt(hexChar);
-        return new byte[]{(byte) intValue};
+        return (byte) intValue;
     }
 
     public char getChar() {
@@ -81,7 +81,7 @@ public class HexChar {
         return intValue;
     }
 
-    public byte @NotNull [] toBytes() {
+    public byte toByte() {
         return hexCharToByteArray(c);
     }
 

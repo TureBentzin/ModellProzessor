@@ -25,12 +25,11 @@ public class Command {
         return hexData;
     }
 
-    public byte @NotNull [] toByteArray() {
-        byte[] command = new byte[8];
-        byte[] data = hexData.toBytes();
-        byte[] operator = hexCommand.toByteArray();
-        System.arraycopy(operator, 0, command, 0, operator.length);
-        System.arraycopy(data, 0, command, operator.length, data.length);
+    public byte toByte() {
+        byte command;
+        byte data = hexData.toByte();
+        byte operator = hexCommand.toByte();
+        command = (byte) (operator << 4 | data);
         return command;
     }
 }

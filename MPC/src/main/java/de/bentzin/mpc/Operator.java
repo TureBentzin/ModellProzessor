@@ -38,9 +38,9 @@ public class Operator implements Predicate<HexChar> {
         INDEX.put("SUB_VALUE", SUB_VALUE);
         INDEX.put("SUB_ADDRESS", SUB_ADDRESS);
         INDEX.put("JMP", JMP);
-        INDEX.put("BRZ", BRZ);
-        INDEX.put("BRC", BRC);
-        INDEX.put("BRN", BRN);
+        INDEX.put("BRZ_VALUE", BRZ);
+        INDEX.put("BRC_VALUE", BRC);
+        INDEX.put("BRN_VALUE", BRN);
 
     }
 
@@ -55,8 +55,8 @@ public class Operator implements Predicate<HexChar> {
         return operator;
     }
 
-    public byte @NotNull [] toByteArray() {
-        return operator.toBytes();
+    public byte toByte() {
+        return operator.toByte();
     }
 
     @Override
