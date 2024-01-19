@@ -29,7 +29,16 @@ public class MemPop {
                 System.exit(1);
             }
             progm = new File(args[0]);
+            if (!progm.isFile() && !progm.exists()) {
+                System.err.println("Cant find programm file: " + args[0]);
+                System.exit(-1);
+            }
+
             File mem = new File(args[1]);
+            if (!mem.isFile() && !mem.exists()) {
+                System.err.println("Cant find memory file: " + args[1]);
+                System.exit(-1);
+            }
 
             try {
                 mmap = MemFileUtil.readMem(mem);
