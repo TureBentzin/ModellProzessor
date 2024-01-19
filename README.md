@@ -1,6 +1,6 @@
 # ModellProzessor
 
-Compiler &amp; Simulator for the ModellProzessor from the "TI Module" at FH Aachen University.
+Compiler & Simulator for the ModellProzessor from the "TI Module" at FH Aachen University.
 
 ## How to use
 
