@@ -79,3 +79,8 @@ deploy:jdk8:
   only:
     variables:
       - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  artifacts:
+    paths:
+      - MPC/target/*.jar
+      - mempop/target/*.jar
+    when: always
