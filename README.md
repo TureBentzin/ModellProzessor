@@ -2,12 +2,22 @@
 
 Compiler & Simulator for the ModellProzessor from the "TI Module" at FH Aachen University.
 
+### CI Status / Official Mirror
+
+[![pipeline status](https://git.fh-aachen.de/tb3838s/modellprozessor/badges/main/pipeline.svg)](https://git.fh-aachen.de/tb3838s/modellprozessor/-/commits/main)
+
+There is an offical mirror of this repository at
+the [FH Aachen GitLab](https://git.fh-aachen.de/tb3838s/modellprozessor).
+The CI Status is generated from this mirror, so there is an additional delay of a few minutes. This is currently an
+experimental setup.
+
 ## How to use
 
 ### MPC - ModellProzessor Compiler
 
 The MPC is a very simple and basic compiler for the ModellProzessor.
-It is written in Java and can be compiled from scratch using the `JDK Development Kit` [[download]](https://www.oracle.com/de/java/technologies/downloads/#java21)!
+It is written in Java and can be compiled from scratch using
+the `JDK Development Kit` [[download]](https://www.oracle.com/de/java/technologies/downloads/#java21)!
 To compile MPC use maven and run the install goal: [[install maven]](https://maven.apache.org/download.cgi)
 
 ```bash
@@ -24,6 +34,7 @@ java -jar mpc.jar input_file.asm
 Replace input_file.asm with the path to your assembly file.
 
 ## Information
+
 Currently MPC does not support labels, so you have to use
 the absolute address for jumps and calls.
 Please define addresses as a hex value. That means address '13' would be a 'D'. Please use uppercase letters for hex
