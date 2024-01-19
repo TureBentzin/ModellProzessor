@@ -43,7 +43,7 @@ the `JDK Development Kit` [[download]](https://www.oracle.com/de/java/technologi
 To compile mpop use maven and run the install goal: [[install maven]](https://maven.apache.org/download.cgi)
 
 ```bash
-mvn clean install -f mpop/pom.xml
+mvn clean install -f mempop/pom.xml
 ```
 
 Mempop accepts one or two arguments.
@@ -66,7 +66,7 @@ You need to provide the address and the value in hex format. The address needs t
 To run the mempop use the following command:
 
 ```bash
-java -jar mempop\target\mempop.jar input_file.progm [memory_file.mem]
+java -jar mempop/target/mempop.jar input_file.progm [memory_file.mem]
 ```
 
 ## Information
