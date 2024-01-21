@@ -79,7 +79,7 @@ build:mpc:
     variables:
       - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     changes:
-      - MPC/**
+      - MPC/**/*
 
 # mempop
 build:mempop:
@@ -96,7 +96,7 @@ build:mempop:
     variables:
       - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     changes:
-      - mempop/**
+      - mempop/**/*
 
 
 # MPS
@@ -114,6 +114,6 @@ build:mps:
     variables:
       - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     changes:
-      - mps/**
+      - mps/**/*
 
 
