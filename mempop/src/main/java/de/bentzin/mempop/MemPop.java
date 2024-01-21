@@ -14,8 +14,7 @@ import java.util.Map;
  * @since 19-01-2024
  */
 public class MemPop {
-
-    //This line was changed to test CI
+    
 
     public static void main(@NotNull String @NotNull [] args) {
         long time = System.currentTimeMillis();
