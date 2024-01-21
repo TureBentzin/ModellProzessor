@@ -2,6 +2,7 @@ package de.bentzin.mps;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import de.bentzin.mps.parts.ArithmeticResult;
 import org.jetbrains.annotations.NotNull;
 
 public class HexChar {
@@ -85,20 +86,22 @@ public class HexChar {
         return hexCharToByteArray(c);
     }
 
-    public @NotNull HexChar add(@NotNull HexChar other) {
+    public @NotNull ArithmeticResult add(@NotNull HexChar other) {
         int sum = this.intValue + other.intValue;
         if (sum > 15) {
             sum -= 16; //overflow
         }
-        return INDEX.get((char) sum);
+        // return INDEX.get((char) sum);
+        return new ArithmeticResult(INDEX.get((char) sum), sum > 15);
     }
 
-    public @NotNull HexChar subtract(@NotNull HexChar other) {
+    public @NotNull ArithmeticResult subtract(@NotNull HexChar other) {
         int difference = this.intValue - other.intValue;
         if (difference < 0) {
             difference += 16; //underflow
         }
-        return INDEX.get((char) difference);
+        // return INDEX.get((char) difference);
+        return new ArithmeticResult(INDEX.get((char) difference), difference < 0);
     }
 
     public @NotNull HexChar increment() {

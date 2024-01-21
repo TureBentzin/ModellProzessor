@@ -30,7 +30,7 @@ public class ProgramCounter extends ClockSensitive {
     void onClock(@NotNull BinarySignalEvent event) {
         if (event.equals(BinarySignalEvent.FALLING)) {
             if (enable_increment.get()) {
-                
+                data = data.increment();
             }
             data_out.set(data);
         }
@@ -62,6 +62,6 @@ public class ProgramCounter extends ClockSensitive {
 
     @Override
     public @NotNull String getIdentifier() {
-        return null;
+        return "Program Counter";
     }
 }
