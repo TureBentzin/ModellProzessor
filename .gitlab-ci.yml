@@ -84,3 +84,20 @@ deploy:jdk8:
       - MPC/target/*.jar
       - mempop/target/*.jar
     when: always
+
+# MPS
+build:mps:
+  stage: build
+  tags:
+    - shared
+  script:
+    - 'mvn $MAVEN_CLI_OPTS install -f mps/pom.xml'
+  artifacts:
+    paths:
+      - mps/target/*.jar
+    when: always
+  only:
+    variables:
+      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+
