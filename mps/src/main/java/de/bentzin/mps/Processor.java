@@ -8,5 +8,5 @@ import java.util.ArrayList;
  * @since 21-01-2024
  */
 public class Processor {
-    ArrayList<>
+
 }
