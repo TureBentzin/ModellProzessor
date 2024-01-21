@@ -105,11 +105,11 @@ public class HexChar {
     }
 
     public @NotNull HexChar increment() {
-        return add(x1);
+        return add(x1).result()
     }
 
     public @NotNull HexChar decrement() {
-        return subtract(x1);
+        return subtract(x1).result();
     }
 
     public @NotNull HexChar and(@NotNull HexChar other) {
