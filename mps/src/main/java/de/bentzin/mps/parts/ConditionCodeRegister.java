@@ -103,6 +103,6 @@ public class ConditionCodeRegister implements ClockSensitive {
 
     @Override
     public @NotNull String getIdentifier() {
-        return "ConditionCodeRegister";
+        return "Condition code register";
     }
 }
