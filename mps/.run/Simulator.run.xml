@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Simulator" type="Application" factoryName="Application" activateToolWindowBeforeRun="false" show_console_on_std_out="true">
+    <output_file path="latest.log" is_save="true" />
+    <option name="MAIN_CLASS_NAME" value="de.bentzin.mps.MPS" />
+    <module name="mps" />
+    <option name="PROGRAM_PARAMETERS" value="test.bin" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
