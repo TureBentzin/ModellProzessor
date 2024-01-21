@@ -17,14 +17,14 @@ import org.jetbrains.annotations.NotNull;
  * @since 21-01-2024
  */
 public class ControlUnit implements Part {
-    private final @NotNull Signal<HexChar> instruction;
-    private final @NotNull BinarySignal zero;
-    private final @NotNull BinarySignal carry;
-    private final @NotNull BinarySignal negative;
     //Multiplexer 1 (pre accumulator)
     private final @NotNull BinarySignal m1 = new BinarySignal(false);
     //Multiplexer 2 (pre RAM)
     private final @NotNull BinarySignal m2 = new BinarySignal(false);
+    private @NotNull Signal<HexChar> instructionIn;
+    private @NotNull BinarySignal zeroIn;
+    private @NotNull BinarySignal carryIn;
+    private @NotNull BinarySignal negativeIn;
     //Accumulator enable
     private @NotNull BinarySignal e = new BinarySignal(false);
     //Accumulator load (accumulator multiplexer)
@@ -36,27 +36,61 @@ public class ControlUnit implements Part {
     //Program counter increment
     private @NotNull BinarySignal inc = new BinarySignal(false);
 
-    public ControlUnit(@NotNull Signal<HexChar> instruction, @NotNull BinarySignal zero, @NotNull BinarySignal carry, @NotNull BinarySignal negative) {
-        this.instruction = instruction;
-        this.zero = zero;
-        this.carry = carry;
-        this.negative = negative;
+    public ControlUnit(@NotNull Signal<HexChar> instructionIn, @NotNull BinarySignal zeroIn, @NotNull BinarySignal carryIn, @NotNull BinarySignal negativeIn) {
+        this.instructionIn = instructionIn;
+        this.zeroIn = zeroIn;
+        this.carryIn = carryIn;
+        this.negativeIn = negativeIn;
+
+        instructionIn.listen(this::update);
+        zeroIn.listen(this::update);
+        carryIn.listen(this::update);
+        negativeIn.listen(this::update);
+
     }
 
-    public @NotNull Signal<HexChar> getInstruction() {
-        return instruction;
+    public ControlUnit() {
+        this.instructionIn = new Signal<>(HexChar.x0);
+        this.zeroIn = new BinarySignal(false);
+        this.carryIn = new BinarySignal(false);
+        this.negativeIn = new BinarySignal(false);
     }
 
-    public @NotNull BinarySignal getZero() {
-        return zero;
+    public void update() {
+        HexChar instruction = instructionIn.get();
+        
     }
 
-    public @NotNull BinarySignal getCarry() {
-        return carry;
+    public @NotNull Signal<HexChar> getInstructionIn() {
+        return instructionIn;
     }
 
-    public @NotNull BinarySignal getNegative() {
-        return negative;
+    public void setInstructionIn(@NotNull Signal<HexChar> instructionIn) {
+        this.instructionIn = instructionIn;
+    }
+
+    public @NotNull BinarySignal getZeroIn() {
+        return zeroIn;
+    }
+
+    public void setZeroIn(@NotNull BinarySignal zeroIn) {
+        this.zeroIn = zeroIn;
+    }
+
+    public @NotNull BinarySignal getCarryIn() {
+        return carryIn;
+    }
+
+    public void setCarryIn(@NotNull BinarySignal carryIn) {
+        this.carryIn = carryIn;
+    }
+
+    public @NotNull BinarySignal getNegativeIn() {
+        return negativeIn;
+    }
+
+    public void setNegativeIn(@NotNull BinarySignal negativeIn) {
+        this.negativeIn = negativeIn;
     }
 
     public @NotNull BinarySignal getM1() {

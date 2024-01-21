@@ -11,15 +11,23 @@ import java.util.function.BiConsumer;
  * @since 21-01-2024
  */
 public class Signal<T> {
-    private @NotNull T value;
     private final @NotNull List<BiConsumer<Signal<T>, SignalEvent<T>>> updateListeners = new ArrayList<>();
+    private @NotNull T value;
 
     public Signal(@NotNull T value) {
         this.value = value;
     }
 
+    public Signal() {
+
+    }
+
     public void listen(@NotNull BiConsumer<Signal<T>, SignalEvent<T>> listener) {
         updateListeners.add(listener);
+    }
+
+    public void listen(@NotNull Runnable listener) {
+        updateListeners.add((signal, event) -> listener.run());
     }
 
     public @NotNull T get() {

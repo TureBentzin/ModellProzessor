@@ -16,8 +16,8 @@ public class RAM extends ClockSensitive {
 
     private @NotNull RAMPair @NotNull [] data;
 
+    private @NotNull Signal<HexChar> commandOut = new Signal<>(HexChar.x0);
     private @NotNull Signal<HexChar> dataOut = new Signal<>(HexChar.x0);
-    private @NotNull Signal<HexChar> addressOut = new Signal<>(HexChar.x0);
 
     public RAM(@NotNull BinarySignal clk, @NotNull Signal<HexChar> dataIn, @NotNull Signal<HexChar> addressIn, @NotNull BinarySignal write, @NotNull RAMPair @NotNull [] data) {
         super(clk);
@@ -27,6 +27,10 @@ public class RAM extends ClockSensitive {
         this.data = data;
     }
 
+    public RAM(@NotNull BinarySignal clk) {
+        super(clk);
+    }
+
 
     @Override
     void onClock(@NotNull BinarySignalEvent event) {
@@ -34,7 +38,7 @@ public class RAM extends ClockSensitive {
             if (write.get()) {
                 access(addressIn.get()).setData(dataIn.get());
             }
-            dataOut.set(access(addressIn.get()).getData());
+            commandOut.set(access(addressIn.get()).getData());
         }
     }
 
@@ -59,16 +63,16 @@ public class RAM extends ClockSensitive {
         return addressIn;
     }
 
-    public @NotNull Signal<HexChar> getAddressOut() {
-        return addressOut;
+    public @NotNull Signal<HexChar> getDataOut() {
+        return dataOut;
     }
 
     public @NotNull Signal<HexChar> getDataIn() {
         return dataIn;
     }
 
-    public @NotNull Signal<HexChar> getDataOut() {
-        return dataOut;
+    public @NotNull Signal<HexChar> getCommandOut() {
+        return commandOut;
     }
 
 }

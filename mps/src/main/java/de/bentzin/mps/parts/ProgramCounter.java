@@ -22,8 +22,10 @@ public class ProgramCounter extends ClockSensitive {
 
     private @NotNull Signal<HexChar> data_out = new Signal<>(data);
 
-    public ProgramCounter(@NotNull BinarySignal clock) {
+    public ProgramCounter(@NotNull BinarySignal clock, @NotNull BinarySignal enable_increment, @NotNull Signal<HexChar> data_in) {
         super(clock);
+        this.data_in = data_in;
+        this.enable_increment = enable_increment;
     }
 
     @Override
