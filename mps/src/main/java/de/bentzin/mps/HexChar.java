@@ -1,4 +1,4 @@
-package de.bentzin.mpc;
+package de.bentzin.mps;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

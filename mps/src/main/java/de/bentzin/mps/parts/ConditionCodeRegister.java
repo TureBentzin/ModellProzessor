@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Ture Bentzin
  * @since 21-01-2024
  */
-public class ConditionCodeRegister implements ClockSensitive {
+public class ConditionCodeRegister extends ClockSensitive {
     private @NotNull BinarySignal negativeIn;
     private @NotNull BinarySignal zeroIn;
     private @NotNull BinarySignal carryIn;
@@ -21,7 +21,8 @@ public class ConditionCodeRegister implements ClockSensitive {
     private @NotNull BinarySignal carryOut = new BinarySignal(false);
 
 
-    public ConditionCodeRegister(@NotNull BinarySignal negativeIn, @NotNull BinarySignal zeroIn, @NotNull BinarySignal carryIn) {
+    public ConditionCodeRegister(@NotNull BinarySignal clk, @NotNull BinarySignal negativeIn, @NotNull BinarySignal zeroIn, @NotNull BinarySignal carryIn) {
+        super(clk);;
         this.negativeIn = negativeIn;
         this.zeroIn = zeroIn;
         this.carryIn = carryIn;
@@ -52,8 +53,8 @@ public class ConditionCodeRegister implements ClockSensitive {
     }
 
     @Override
-    public void onClock(@NotNull ClockEdge edge) {
-        if (edge == ClockEdge.RISING) {
+    public void onClock(BinarySignalEvent event) {
+        if (event.equals(BinarySignalEvent.RISING)) {
             negative = negativeIn.get();
             zero = zeroIn.get();
             carry = carryIn.get();

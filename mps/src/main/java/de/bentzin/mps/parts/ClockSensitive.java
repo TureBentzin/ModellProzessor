@@ -6,12 +6,12 @@ import org.jetbrains.annotations.NotNull;
  * @author Ture Bentzin
  * @since 21-01-2024
  */
-public interface ClockSensitive extends Part {
+public abstract class ClockSensitive implements Part {
 
-    void onClock(@NotNull ClockEdge edge);
-
-    enum ClockEdge {
-        RISING,
-        FALLING
+    public ClockSensitive(@NotNull BinarySignal clock) {
+        clock.listen((booleanSignal, booleanSignalEvent) -> onClock(BinarySignalEvent.from(booleanSignalEvent)));
     }
+
+
+    abstract void onClock(@NotNull BinarySignalEvent event);
 }
