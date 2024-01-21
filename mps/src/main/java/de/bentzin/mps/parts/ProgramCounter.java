@@ -3,39 +3,37 @@ package de.bentzin.mps.parts;
 import de.bentzin.mps.HexChar;
 import org.jetbrains.annotations.NotNull;
 
-import static de.bentzin.mps.HexChar.x0;
+
+/*
+The documention for the two input signals is missing so while this text is above the code, i assume there is only one signal with the job of
+enabling incrementing the counter.
+ */
 
 /**
  * @author Ture Bentzin
  * @since 21-01-2024
  */
-public class DataRegister extends ClockSensitive {
+public class ProgramCounter extends ClockSensitive {
 
     private @NotNull Signal<HexChar> data_in;
+    private @NotNull BinarySignal enable_increment;
 
-    private @NotNull HexChar data = x0;
+    private @NotNull HexChar data = HexChar.x0;
 
     private @NotNull Signal<HexChar> data_out = new Signal<>(data);
 
-    public DataRegister(@NotNull BinarySignal clk, @NotNull Signal<HexChar> dataIn) {
-        super(clk);
-        data_in = dataIn;
+    public ProgramCounter(@NotNull BinarySignal clock) {
+        super(clock);
     }
 
     @Override
-    public void onClock(@NotNull BinarySignalEvent event) {
-        if (event.equals(BinarySignalEvent.RISING)) {
-            data = data_in.get();
+    void onClock(@NotNull BinarySignalEvent event) {
+        if (event.equals(BinarySignalEvent.FALLING)) {
+            if (enable_increment.get()) {
+                
+            }
             data_out.set(data);
         }
-    }
-
-    public @NotNull HexChar getData() {
-        return data;
-    }
-
-    public void setData(@NotNull HexChar data) {
-        this.data = data;
     }
 
     public @NotNull Signal<HexChar> getData_in() {
@@ -54,8 +52,16 @@ public class DataRegister extends ClockSensitive {
         this.data_out = data_out;
     }
 
+    public @NotNull HexChar getData() {
+        return data;
+    }
+
+    public @NotNull BinarySignal getEnable_increment() {
+        return enable_increment;
+    }
+
     @Override
     public @NotNull String getIdentifier() {
-        return "Data Register";
+        return null;
     }
 }
