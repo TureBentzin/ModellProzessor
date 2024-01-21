@@ -85,6 +85,93 @@ public class HexChar {
         return hexCharToByteArray(c);
     }
 
+    public @NotNull HexChar add(@NotNull HexChar other) {
+        int sum = this.intValue + other.intValue;
+        if (sum > 15) {
+            sum -= 16; //overflow
+        }
+        return INDEX.get((char) sum);
+    }
+
+    public @NotNull HexChar subtract(@NotNull HexChar other) {
+        int difference = this.intValue - other.intValue;
+        if (difference < 0) {
+            difference += 16; //underflow
+        }
+        return INDEX.get((char) difference);
+    }
+
+    public @NotNull HexChar increment() {
+        return add(x1);
+    }
+
+    public @NotNull HexChar decrement() {
+        return subtract(x1);
+    }
+
+    public @NotNull HexChar and(@NotNull HexChar other) {
+        int result = this.intValue & other.intValue;
+        return INDEX.get((char) result);
+    }
+
+    public @NotNull HexChar or(@NotNull HexChar other) {
+        int result = this.intValue | other.intValue;
+        return INDEX.get((char) result);
+    }
+
+    public @NotNull HexChar xor(@NotNull HexChar other) {
+        int result = this.intValue ^ other.intValue;
+        return INDEX.get((char) result);
+    }
+
+    public @NotNull HexChar not() {
+        int result = ~this.intValue;
+        return INDEX.get((char) result);
+    }
+
+    public @NotNull HexChar shiftLeft() {
+        int result = this.intValue << 1;
+        return INDEX.get((char) result);
+    }
+
+    public @NotNull HexChar shiftRight() {
+        int result = this.intValue >> 1;
+        return INDEX.get((char) result);
+    }
+
+    public @NotNull HexChar shiftRight(byte amount) {
+        int result = this.intValue >>> amount;
+        return INDEX.get((char) result);
+    }
+
+    public @NotNull HexChar shiftLeft(byte amount) {
+        int result = this.intValue << amount;
+        return INDEX.get((char) result);
+    }
+
+    public @NotNull HexChar shiftRight(@NotNull HexChar amount) {
+        int result = this.intValue >>> amount.getIntValue();
+        return INDEX.get((char) result);
+    }
+
+    public @NotNull HexChar shiftLeft(@NotNull HexChar amount) {
+        int result = this.intValue << amount.getIntValue();
+        return INDEX.get((char) result);
+    }
+
+    public boolean isZero() {
+        return this == x0;
+    }
+
+    /*
+     * Returns true if the value of this HexChar is negative.
+     * This is the case if the value is greater than 7.
+     * This is if the binary representation of the value starts with a 1.
+     */
+    public boolean mightBeNegative() {
+        return this == x8 || this == x9 || this == xA || this == xB || this == xC || this == xD || this == xE || this == xF;
+    }
+
     @Override
     public boolean equals(@NotNull Object obj) {
         return this == obj;
