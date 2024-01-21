@@ -11,6 +11,12 @@ the [FH Aachen GitLab](https://git.fh-aachen.de/tb3838s/modellprozessor).
 The CI Status is generated from this mirror, so there is an additional delay of a few minutes. This is currently an
 experimental setup.
 
+### Download prebuilt artifacts
+
+If you don't want to build the applications yourself, you can access the artifacts built by the CI. They should not be treated as releases or stable builds.
+[[View official artifacts]](https://git.fh-aachen.de/tb3838s/modellprozessor/-/artifacts)
+
+
 ## How to use
 
 ### MPC - ModellProzessor Compiler
