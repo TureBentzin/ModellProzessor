@@ -50,40 +50,54 @@ cache:
   paths:
     - .m2/repository
 
-# For merge requests do not `deploy` but only run `verify`.
+# Run verify in other branches than the default branch
 # See https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
 .verify:
   stage: test
   tags:
     - shared
   script:
-    - 'mvn $MAVEN_CLI_OPTS verify -f MPC/pom.xml'
-    - 'mvn $MAVEN_CLI_OPTS verify -f mempop/pom.xml'
+    - 'mvn $MAVEN_CLI_OPTS verify -f MPC/pom.xml -X'
+    - 'mvn $MAVEN_CLI_OPTS verify -f mempop/pom.xml -X'
+    - 'mvn $MAVEN_CLI_OPTS verify -f mps/pom.xml -X'
   except:
     variables:
       - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
-# Verify merge requests using JDK8
-verify:jdk8:
-  extends:
-    - .verify
-
-# For `master` or `main` branch run `mvn deploy` automatically.
-deploy:jdk8:
-  stage: deploy
+# MPC
+build:mpc:
+  stage: build
   tags:
     - shared
   script:
     - 'mvn $MAVEN_CLI_OPTS install -f MPC/pom.xml'
-    - 'mvn $MAVEN_CLI_OPTS install -f mempop/pom.xml'
-  only:
-    variables:
-      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   artifacts:
     paths:
       - MPC/target/*.jar
+    when: always
+  only:
+    variables:
+      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    changes:
+      - MPC/**
+
+# mempop
+build:mempop:
+  stage: build
+  tags:
+    - shared
+  script:
+    - 'mvn $MAVEN_CLI_OPTS install -f mempop/pom.xml'
+  artifacts:
+    paths:
       - mempop/target/*.jar
     when: always
+  only:
+    variables:
+      - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    changes:
+      - mempop/**
+
 
 # MPS
 build:mps:
@@ -99,5 +113,7 @@ build:mps:
   only:
     variables:
       - $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    changes:
+      - mps/**
 
 
