@@ -9,7 +9,7 @@ import static de.bentzin.mps.HexChar.x0;
  * @author Ture Bentzin
  * @since 21-01-2024
  */
-public class ArithmeticLogicUnit {
+public class ArithmeticLogicUnit implements Part {
     private @NotNull Signal<HexChar> inputX;
     private @NotNull Signal<HexChar> inputY;
     private @NotNull BinarySignal subtract;
@@ -85,6 +85,11 @@ public class ArithmeticLogicUnit {
 
     public void setOutput(@NotNull Signal<HexChar> output) {
         this.output = output;
+    }
+
+    @Override
+    public @NotNull String getIdentifier() {
+        return "Arithmetic Logic Unit";
     }
 }
 

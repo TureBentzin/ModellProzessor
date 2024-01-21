@@ -8,7 +8,10 @@ import java.util.function.Supplier;
  * @author Ture Bentzin
  * @since 21-01-2024
  */
-public class Multiplexer<T, S extends Signal<T>> {
+public class Multiplexer<T, S extends Signal<T>> implements Part {
+
+    private final String identifier;
+
     private final boolean inverted;
     private final @NotNull S output;
     private final @NotNull BinarySignal select;
@@ -16,16 +19,19 @@ public class Multiplexer<T, S extends Signal<T>> {
     private @NotNull S input1;
 
 
-    public Multiplexer(@NotNull S input0, @NotNull S input1, @NotNull BinarySignal select, @NotNull Supplier<S> outputFactory) {
-        this(input0, input1, select, outputFactory, false);
+    public Multiplexer(@NotNull String identifier, @NotNull S input0, @NotNull S input1, @NotNull BinarySignal select, @NotNull Supplier<S> outputFactory) {
+        this(identifier, input0, input1, select, outputFactory, false);
     }
 
-    public Multiplexer(@NotNull S input0, @NotNull S input1, @NotNull BinarySignal select, @NotNull Supplier<S> outputFactory, boolean inverted) {
+    public Multiplexer(@NotNull String identifier, @NotNull S input0, @NotNull S input1, @NotNull BinarySignal select, @NotNull Supplier<S> outputFactory, boolean inverted) {
         this.input0 = input0;
         this.input1 = input1;
         output = outputFactory.get();
         this.inverted = inverted;
         this.select = select;
+
+        this.identifier = identifier;
+
         select.listen((signal, signalEvent) -> updateOutput());
         input0.listen((tSignal, tSignalEvent) -> updateOutput());
         input1.listen((tSignal, tSignalEvent) -> updateOutput());
@@ -60,4 +66,8 @@ public class Multiplexer<T, S extends Signal<T>> {
     }
 
 
+    @Override
+    public @NotNull String getIdentifier() {
+        return identifier;
+    }
 }
