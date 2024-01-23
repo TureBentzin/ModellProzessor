@@ -55,7 +55,7 @@ public class MPS {
                     LOGGER.info("Binary hexdump:");
                     LOGGER.info(HexDumpUtil.formatHexDump(bytes, 0, bytes.length));
 
-                    Processor processor = new Processor();
+                    Processor processor = new Processor(bytes);
 
                 } catch (Exception e) {
                     LOGGER.warning("Failed to load binary!");

@@ -61,7 +61,7 @@ public class Processor {
                 AccumulatorRegister.HexAndCarry.fromHex(m1.getOutput()),
                 AccumulatorRegister.HexAndCarry.fromHex(arithmeticLogicUnit.getOutput()),
                 controlUnit.getLd(),
-                controlUnit.getE());
+                () -> new Signal<>(AccumulatorRegister.HexAndCarry.defaultHexAndCarry()));
 
     }
 
