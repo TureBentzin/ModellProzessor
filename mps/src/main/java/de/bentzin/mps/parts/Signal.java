@@ -42,6 +42,5 @@ public class Signal<T> {
         this.value = value;
         SignalEvent<T> event = event(this.value, value);
         updateListeners.forEach(signalSignalEventBiConsumer -> signalSignalEventBiConsumer.accept(this, event));
-
     }
 }

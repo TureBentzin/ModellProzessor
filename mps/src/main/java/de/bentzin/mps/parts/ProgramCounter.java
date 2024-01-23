@@ -17,20 +17,25 @@ public class ProgramCounter extends ClockSensitive {
 
     private @NotNull Signal<HexChar> data_in;
     private @NotNull BinarySignal enable_increment;
+    private @NotNull BinarySignal load;
 
     private @NotNull HexChar data = HexChar.x0;
 
     private @NotNull Signal<HexChar> data_out = new Signal<>(data);
 
-    public ProgramCounter(@NotNull BinarySignal clock, @NotNull BinarySignal enable_increment, @NotNull Signal<HexChar> data_in) {
+    public ProgramCounter(@NotNull BinarySignal clock, @NotNull BinarySignal enable_increment, @NotNull BinarySignal load, @NotNull Signal<HexChar> data_in) {
         super(clock);
         this.data_in = data_in;
         this.enable_increment = enable_increment;
+        this.load = load;
     }
 
     @Override
     void onClock(@NotNull BinarySignalEvent event) {
         if (event.equals(BinarySignalEvent.FALLING)) {
+            if (load.get()) {
+                data = data_in.get();
+            }
             if (enable_increment.get()) {
                 data = data.increment();
             }

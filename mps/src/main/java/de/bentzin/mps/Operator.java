@@ -26,6 +26,7 @@ public class Operator implements Predicate<HexChar> {
     public static final @NotNull Operator BRN = new Operator(HexChar.xB);
 
     public static final @NotNull BiMap<String, Operator> INDEX = HashBiMap.create(16);
+    public static final @NotNull BiMap<HexChar, Operator> OPCODES = HashBiMap.create(16);
 
     static {
         //populate INDEX
@@ -42,6 +43,19 @@ public class Operator implements Predicate<HexChar> {
         INDEX.put("BRC_VALUE", BRC);
         INDEX.put("BRN_VALUE", BRN);
 
+        //populate OPCODES
+        OPCODES.put(HexChar.x0, NOP);
+        OPCODES.put(HexChar.x1, LDA_VALUE);
+        OPCODES.put(HexChar.x2, LDA_ADDRESS);
+        OPCODES.put(HexChar.x3, STA_ADDRESS);
+        OPCODES.put(HexChar.x4, ADD_VALUE);
+        OPCODES.put(HexChar.x5, ADD_ADDRESS);
+        OPCODES.put(HexChar.x6, SUB_VALUE);
+        OPCODES.put(HexChar.x7, SUB_ADDRESS);
+        OPCODES.put(HexChar.x8, JMP);
+        OPCODES.put(HexChar.x9, BRZ);
+        OPCODES.put(HexChar.xA, BRC);
+        OPCODES.put(HexChar.xB, BRN);
     }
 
     private final @NotNull HexChar operator;
@@ -57,6 +71,16 @@ public class Operator implements Predicate<HexChar> {
 
     public byte toByte() {
         return operator.toByte();
+    }
+
+    @Override
+    public @NotNull String toString() {
+        String name = INDEX.inverse().get(this);
+        if (name == null) {
+            return operator.toString();
+        } else {
+            return name + " (" + operator + ")";
+        }
     }
 
     @Override

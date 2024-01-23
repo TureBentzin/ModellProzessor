@@ -9,8 +9,13 @@ opening a pull request on GitHub. I will gladly accept it.
 In this implementation, the clock is managed by the "Processor" class.
  */
 
+import de.bentzin.mps.ControlUnitException;
 import de.bentzin.mps.HexChar;
+import de.bentzin.mps.Operator;
 import org.jetbrains.annotations.NotNull;
+
+import static de.bentzin.mps.Operator.LDA_VALUE;
+import static de.bentzin.mps.Operator.NOP;
 
 /**
  * @author Ture Bentzin
@@ -36,6 +41,8 @@ public class ControlUnit implements Part {
     //Program counter increment
     private @NotNull BinarySignal inc = new BinarySignal(false);
 
+    private @NotNull BinarySignal loadCounter = new BinarySignal(false);
+
     public ControlUnit(@NotNull Signal<HexChar> instructionIn, @NotNull BinarySignal zeroIn, @NotNull BinarySignal carryIn, @NotNull BinarySignal negativeIn) {
         this.instructionIn = instructionIn;
         this.zeroIn = zeroIn;
@@ -58,7 +65,32 @@ public class ControlUnit implements Part {
 
     public void update() {
         HexChar instruction = instructionIn.get();
-        
+        Operator operator = Operator.OPCODES.get(instruction);
+        if (operator == null) {
+            throw new ControlUnitException("Unknown instruction: " + instruction, this);
+        } else {
+            if (operator == NOP) {
+                m1.set(false);
+                m2.set(false);
+                e.set(false);
+                ld.set(false);
+                sub.set(false);
+                we.set(false);
+                inc.set(true);
+                loadCounter.set(false);
+            } else if (operator == LDA_VALUE) {
+                m1.set(true);
+                m2.set(false);
+                e.set(true);
+                ld.set(true);
+                //sub dc
+                we.set(false);
+                inc.set(true);
+                loadCounter.set(false);
+            } else {
+                throw new ControlUnitException("Unsupported operator: " + operator, this);
+            }
+        }
     }
 
     public @NotNull Signal<HexChar> getInstructionIn() {
@@ -139,6 +171,10 @@ public class ControlUnit implements Part {
 
     public void setInc(@NotNull BinarySignal inc) {
         this.inc = inc;
+    }
+
+    public @NotNull BinarySignal getLoadCounter() {
+        return loadCounter;
     }
 
     @Override

@@ -179,4 +179,10 @@ public class HexChar {
     public boolean equals(@NotNull Object obj) {
         return this == obj;
     }
+
+    @Override
+    public String toString() {
+        //return c in hex format
+        return String.valueOf(c);
+    }
 }

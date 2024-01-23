@@ -28,6 +28,9 @@ public class ArithmeticLogicUnit implements Part {
         subtract.listen((binarySignal, binarySignalEvent) -> calculate());
     }
 
+    public ArithmeticLogicUnit() {
+    }
+
     private void calculate() {
         HexChar x = inputX.get();
         HexChar y = inputY.get();

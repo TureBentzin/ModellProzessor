@@ -71,6 +71,30 @@ public class RAM extends ClockSensitive {
         return dataIn;
     }
 
+    public void setDataIn(@NotNull Signal<HexChar> dataIn) {
+        this.dataIn = dataIn;
+    }
+
+    public void setAddressIn(@NotNull Signal<HexChar> addressIn) {
+        this.addressIn = addressIn;
+    }
+
+    public void setWrite(@NotNull BinarySignal write) {
+        this.write = write;
+    }
+
+    public void setData(RAMPair @NotNull [] data) {
+        this.data = data;
+    }
+
+    public void setCommandOut(@NotNull Signal<HexChar> commandOut) {
+        this.commandOut = commandOut;
+    }
+
+    public void setDataOut(@NotNull Signal<HexChar> dataOut) {
+        this.dataOut = dataOut;
+    }
+
     public @NotNull Signal<HexChar> getCommandOut() {
         return commandOut;
     }
