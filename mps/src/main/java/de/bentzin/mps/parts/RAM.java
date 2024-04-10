@@ -33,7 +33,7 @@ public class RAM extends ClockSensitive {
 
 
     @Override
-    void onClock(@NotNull BinarySignalEvent event) {
+    public void onClock(@NotNull BinarySignalEvent event) {
         if (event.equals(BinarySignalEvent.FALLING)) {
             if (write.get()) {
                 access(addressIn.get()).setData(dataIn.get());

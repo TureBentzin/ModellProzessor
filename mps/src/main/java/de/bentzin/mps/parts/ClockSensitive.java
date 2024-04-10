@@ -13,5 +13,5 @@ public abstract class ClockSensitive implements Part {
     }
 
 
-    abstract void onClock(@NotNull BinarySignalEvent event);
+    public abstract void onClock(@NotNull BinarySignalEvent event);
 }

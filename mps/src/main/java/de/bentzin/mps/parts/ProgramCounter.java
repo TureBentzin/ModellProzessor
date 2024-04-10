@@ -31,7 +31,7 @@ public class ProgramCounter extends ClockSensitive {
     }
 
     @Override
-    void onClock(@NotNull BinarySignalEvent event) {
+    public void onClock(@NotNull BinarySignalEvent event) {
         if (event.equals(BinarySignalEvent.FALLING)) {
             if (load.get()) {
                 data = data_in.get();

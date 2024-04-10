@@ -10,7 +10,7 @@ import java.util.function.Supplier;
  */
 public class Multiplexer<T, S extends Signal<T>> implements Part {
 
-    private final String identifier;
+    private final @NotNull String identifier;
 
     private final boolean inverted;
     private final @NotNull S output;

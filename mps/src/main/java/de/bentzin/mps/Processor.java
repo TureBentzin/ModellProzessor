@@ -4,38 +4,56 @@ import de.bentzin.mps.parts.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Ture Bentzin
  * @since 21-01-2024
  */
 public class Processor {
-
-    private final byte @NotNull [] memory;
     //clock
     private final @NotNull BinarySignal clk = new BinarySignal(false);
-    //control unit
-    private @Nullable ControlUnit controlUnit;
-    //multiplexer
-    private @Nullable Multiplexer<HexChar, Signal<HexChar>> m1;
-    private @Nullable Multiplexer<HexChar, Signal<HexChar>> m2;
-    //accumulator
-    private @Nullable AccumulatorRegister accumulatorRegister;
-    private @Nullable AccumulatorMultiplexer accumulatorMultiplexer;
-    private @Nullable ArithmeticLogicUnit arithmeticLogicUnit;
-    //condition code register
-    private @Nullable ConditionCodeRegister conditionCodeRegister;
-    //program counter
-    private @Nullable ProgramCounter programCounter;
-    //RAM
-    private @Nullable RAM ram;
-    //instruction register
-    private @Nullable Register<HexChar> instructionRegister;
-    //data register
-    private @Nullable Register<HexChar> dataRegister;
 
-    public Processor(byte @NotNull [] memory) {
-        this.memory = memory;
-    }
+    //control unit
+    @ProcessorPart
+    private @Nullable ControlUnit controlUnit;
+
+    //multiplexer
+    @ProcessorPart
+    private @Nullable Multiplexer<HexChar, Signal<HexChar>> m1;
+    @ProcessorPart
+    private @Nullable Multiplexer<HexChar, Signal<HexChar>> m2;
+
+    //accumulator
+    @ProcessorPart
+    private @Nullable AccumulatorRegister accumulatorRegister;
+    @ProcessorPart
+    private @Nullable AccumulatorMultiplexer accumulatorMultiplexer;
+    @ProcessorPart
+    private @Nullable ArithmeticLogicUnit arithmeticLogicUnit;
+
+
+    //condition code register
+    @ProcessorPart
+    private @Nullable ConditionCodeRegister conditionCodeRegister;
+
+    //program counter
+    @ProcessorPart
+    private @Nullable ProgramCounter programCounter;
+
+    //RAM
+    @ProcessorPart
+    private @Nullable RAM ram;
+
+    //instruction register
+    @ProcessorPart
+    private @Nullable Register<HexChar> instructionRegister;
+
+    //data register
+    @ProcessorPart
+    private @Nullable Register<HexChar> dataRegister;
 
     public void construct() {
         controlUnit = new ControlUnit();
@@ -48,21 +66,42 @@ public class Processor {
 
         m1 = new Multiplexer<>("M1", ram.getDataOut(), dataRegister.getData_out(), controlUnit.getM1(), () -> new Signal<>(HexChar.x0));
 
-        programCounter = new ProgramCounter(clk, controlUnit.getInc(), controlUnit.getLoadCounter(), dataRegister.getData_out());
+        programCounter = new ProgramCounter(clk, controlUnit.getInc(), dataRegister.getData_out());
 
-        m2 = new Multiplexer<>("M2", programCounter.getData_out(), dataRegister.getData_out(), controlUnit.getM2(), () -> new Signal<>(HexChar.x0));
+    }
 
-        ram.setAddressIn(m2.getOutput());
+    private @NotNull Set<Part> parts() {
+        Field[] declaredFields = this.getClass().getDeclaredFields();
+        Set<Part> parts = new HashSet<>();
+        for (Field declaredField : declaredFields) {
+            declaredField.setAccessible(true);
+            if (declaredField.isAnnotationPresent(ProcessorPart.class)) {
+                try {
+                    Object o = declaredField.get(this);
+                    if (o instanceof Part part) {
+                        parts.add(part);
 
-        arithmeticLogicUnit = new ArithmeticLogicUnit();
+                    }
+                } catch (IllegalAccessException ignored) {
 
-        //Accumulator
-        accumulatorMultiplexer = new AccumulatorMultiplexer(
-                AccumulatorRegister.HexAndCarry.fromHex(m1.getOutput()),
-                AccumulatorRegister.HexAndCarry.fromHex(arithmeticLogicUnit.getOutput()),
-                controlUnit.getLd(),
-                () -> new Signal<>(AccumulatorRegister.HexAndCarry.defaultHexAndCarry()));
+                }
+            }
+        }
+        return parts;
+    }
 
+    private void subscribeToClock() {
+        clk.listen((booleanSignal, booleanSignalEvent) -> {
+            for (Part part : parts()) {
+                if (part instanceof ClockSensitive sensitive) {
+                    sensitive.onClock(BinarySignalEvent.from(booleanSignalEvent));
+                }
+            }
+        });
+    }
+
+    private void clkTick() {
+        clk.set(!clk.get());
     }
 
 
