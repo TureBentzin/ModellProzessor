@@ -66,7 +66,8 @@ public class Processor {
 
         m1 = new Multiplexer<>("M1", ram.getDataOut(), dataRegister.getData_out(), controlUnit.getM1(), () -> new Signal<>(HexChar.x0));
 
-        programCounter = new ProgramCounter(clk, controlUnit.getInc(), dataRegister.getData_out());
+        programCounter = new ProgramCounter(clk, controlUnit.getInc(), controlUnit.getLoadCounter(), m1.getOutput());
+        accumulatorRegister = new AccumulatorRegister(clk, );
 
     }
 
